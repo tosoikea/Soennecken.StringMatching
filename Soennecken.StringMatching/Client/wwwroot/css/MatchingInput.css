@@ -1,0 +1,7 @@
+﻿td.match {
+    background-color: green
+}
+
+td.mismatch {
+    background-color: red
+}

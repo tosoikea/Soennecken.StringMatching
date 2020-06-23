@@ -1,0 +1,193 @@
+﻿@using System.Timers;
+@using StringMatching.Shared
+@using StringMatching.Shared.Algorithms
+
+<MatThemeProvider Theme="@applicationTheme">
+    <MatTabGroup>
+        <MatTab Label="Beispiel">
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                        <p>Eingabewort</p>
+                        <MatTextField @bind-Value="request.Word" Outlined="true" PlaceHolder="ABABABC" ReadOnly="@isSimulating" />
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                        <p>Muster</p>
+                        <MatTextField @bind-Value="request.Pattern" Outlined="true" PlaceHolder="ABABC" ReadOnly="@isSimulating" />
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
+                        <MatButton Type="submit" Raised="true" Disabled="@isSimulating" OnClick="@StartSimulation">Start</MatButton>
+                    </div>
+                    @if (isSimulating)
+                    {
+                        <div class="table-responsive">
+                            <table>
+                                <TableRow>
+                                    @for (int j = 0; j < word.Length; j++)
+                                    {
+                                        if (j == i)
+                                        {
+                                            <td>I</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                </TableRow>
+                                <TableRow>
+                                    @foreach (var character in word)
+                                    {
+                                        @if (character.Status == MatchingStatus.Matched)
+                                        {
+                                            <td class="bg-success">@character</td>
+                                        }
+                                        else if (character.Status == MatchingStatus.Mismatched)
+                                        {
+                                            <td class="bg-danger">@character</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@character</td>
+                                        }
+                                    }
+                                </TableRow>
+                                <TableRow>
+                                    @for (int h = 0; h < i; h++)
+                                    {
+                                        <td />
+                                    }
+                                    @foreach (var character in pattern)
+                                    {
+                                        @if (character.Status == MatchingStatus.Matched)
+                                        {
+                                            <td class="bg-success">@character</td>
+                                        }
+                                        else if (character.Status == MatchingStatus.Mismatched)
+                                        {
+                                            <td class="bg-danger">@character</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@character</td>
+                                        }
+                                    }
+                                </TableRow>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </MatTab>
+        <MatTab>
+            <LabelContent>
+                Wörterbuch <MatIcon Icon="@MatIconNames.Library_books"></MatIcon>
+            </LabelContent>
+            <ChildContent>
+                Second Content
+            </ChildContent>
+        </MatTab>
+    </MatTabGroup>
+</MatThemeProvider>
+
+@code {
+    [Parameter]
+    public IMatcher<char> Matcher { get; set; }
+
+    private bool isSimulating = false;
+    private bool isInput { get => !isSimulating; }
+
+    private MatchingCharacter<char>[] word;
+    private MatchingCharacter<char>[] pattern;
+    private int i, k;
+    private Timer timer = new Timer();
+
+    private MatchingRequest request = new MatchingRequest()
+    {
+        Word = "ABABABC",
+        Pattern = "ABABC"
+    };
+
+    private void StartSimulation(MouseEventArgs e)
+    {
+        word = MatchingCharacter<char>.ToMatchingCharacter(request.Word.ToCharArray());
+        pattern = MatchingCharacter<char>.ToMatchingCharacter(request.Pattern.ToCharArray());
+
+        Matcher.Init(pattern.ToArray(), word.ToArray());
+        // Reset pattern
+        for (int h = 0; h < pattern.Length; h++)
+            pattern[h].Reset();
+
+        // Initialize Simulation step
+        isSimulating = true;
+        timer.Start();
+    }
+
+    private void RunStep(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        StepSummary summary = Matcher.Step();
+
+        // Update comparison display
+        StateHasChanged();
+
+        if (summary.IsFinished)
+            ResetSimulation();
+        else if (!summary.IsFinished && summary.Shift != null)
+            ApplyShift(summary.Shift);
+    }
+
+
+    private async void ResetSimulation() {
+        timer.Stop();
+        await Task.Delay(TimeSpan.FromSeconds(1));
+
+        i = 0;
+        k = 0;
+        isSimulating = false;
+        request = new MatchingRequest()
+        {
+            Word = "ABABABC",
+            Pattern = "ABABC"
+        };
+        word = MatchingCharacter<char>.ToMatchingCharacter(request.Word.ToArray());
+        pattern = MatchingCharacter<char>.ToMatchingCharacter(request.Pattern.ToArray());
+        StateHasChanged();
+    }
+
+    private async void ApplyShift(Shift shift)
+    {
+        timer.Stop();
+        this.i = shift.I;
+        this.k = shift.K;
+
+        await Task.Delay(TimeSpan.FromSeconds(1));
+
+        for (int h = 0; h < i; h++)
+            word[h].Reset();
+
+        for (int h = k; h < pattern.Length; h++)
+        {
+            word[h + i].Reset();
+            pattern[h].Reset();
+        }
+
+        for (int h = i + pattern.Length; h < word.Length; h++)
+            word[h].Reset();
+
+        StateHasChanged();
+        timer.Start();
+    }
+
+    MatTheme applicationTheme = new MatTheme()
+    {
+        Primary = MatThemeColors.Orange._500.Value,
+        Secondary = MatThemeColors.BlueGrey._500.Value
+    };
+
+    protected override void OnInitialized()
+    {
+        timer.Interval = 1000;
+        timer.Elapsed += RunStep;
+        timer.AutoReset = true;
+    }
+}
