@@ -29,7 +29,10 @@ namespace Soennecken.StringMatching.Shared.Algorithms
         {
             var summary = new StepSummary()
             {
-                IsFinished = true
+                IsFinished = true,
+                K = k,
+                I = i,
+                Matched = true
             };
 
             if (i > n - m || k < 0)
@@ -41,14 +44,18 @@ namespace Soennecken.StringMatching.Shared.Algorithms
             }
             else
             {
-                int x = i + (k - _rule.Offset(_word[i+k], k));
-                int z = m - 1 - k;
-                i = x;
-                k = k - z;
+                int x = k - _rule.Offset(_word[i+k], k);
+                int z = k - (m - 1);
 
+                // Shift
+                i += x;
+                k -= z;
+
+                summary.Matched = false;
                 summary.Shift = new Shift()
                 {
-                    Strategy = Strategy.Naive,
+                    Strategy = Strategy.BadCharacter,
+                    IsLeft = true,
                     X = x,
                     Z = z,
                     K = k,

@@ -158,7 +158,8 @@
 
         if (shift.IsLeft)
         {
-            for (int j = Pattern.Length - 1; j > shift.K; j--)
+            int limit = (shift.K == Pattern.Length - 1) ? Pattern.Length : shift.K;
+            for (int j = 0; j < limit; j++)
                 Matched[j] = MatchingStatus.Outstanding;
         }
         else
