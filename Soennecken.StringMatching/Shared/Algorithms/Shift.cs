@@ -15,6 +15,8 @@ namespace Soennecken.StringMatching.Shared.Algorithms
     public class Shift
     {
         public Strategy Strategy { get; internal set; }
+
+        public bool IsLeft { get; internal set; }
         public int X { get; internal set; }
         public int Z { get; internal set; }
         public int I { get; internal set; }

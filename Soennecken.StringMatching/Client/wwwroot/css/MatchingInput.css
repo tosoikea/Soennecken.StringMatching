@@ -1,7 +1,39 @@
-﻿td.match {
-    background-color: green
+﻿table {
+    table-layout: fixed;
+    border-collapse: collapse;
 }
 
-td.mismatch {
-    background-color: red
+td {
+    height: 40px;
+    width: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td.mismatchTop {
+    border: 1px solid red;
+    border-bottom: 0;
+}
+
+td.mismatchBottom {
+    border: 1px solid red;
+    border-top: 0;
+}
+
+td.matchTop {
+    border: 1px solid green;
+    border-bottom: 0;
+}
+
+td.matchBottom {
+    border: 1px solid green;
+    border-top: 0;
+}
+
+#pattern {
+    position: relative;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
 }
