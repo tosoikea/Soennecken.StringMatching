@@ -29,7 +29,10 @@ namespace Soennecken.StringMatching.Shared.Algorithms
         {
             var summary = new StepSummary()
             {
-                IsFinished = true
+                IsFinished = true,
+                K = k,
+                I = i,
+                Matched = true
             };
 
             if (i > n - m || k == m)
@@ -46,9 +49,10 @@ namespace Soennecken.StringMatching.Shared.Algorithms
                 i = x;
                 k = k - z;
 
+                summary.Matched = false;
                 summary.Shift = new Shift()
                 {
-                    Strategy = Strategy.Naive,
+                    Strategy = Strategy.KMP,
                     X = x,
                     Z = z,
                     K = k,

@@ -41,16 +41,20 @@ namespace Soennecken.StringMatching.Shared.Algorithms
             }
             else
             {
-                i = i + 1;
-                k = 0;
+                int x = 1;
+                int z = -k;
+
+                // Shift
+                i += x;
+                k -= z;
 
                 summary.Matched = false;
                 summary.Shift = new Shift()
                 {
                     Strategy = Strategy.Naive,
-                    X = 1,
-                    Z = -k,
-                    K = 0,
+                    X = x,
+                    Z = z,
+                    K = k,
                     I = i
                 };
             }
