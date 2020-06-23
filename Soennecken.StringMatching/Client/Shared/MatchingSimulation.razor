@@ -22,56 +22,63 @@
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
             @if (@isSimulationStarted)
             {
-                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
-                    <table>
-                        <TableRow>
-                            @for (int j = 0; j < Word.Length; j++)
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
+                <table>
+                    <TableRow>
+                        @for (int j = 0; j < Word.Length; j++)
+                        {
+                            /*
+                            We are not interested in
+                            a) characters to the left of the current matching alignment
+                            b) characters to the right of the end of the pattern
+                            c) outstanding matches inside the pattern
+                            */
+                            @if (j < i || j - i >= Pattern.Length || Matched[j - i] == MatchingStatus.Outstanding)
                             {
-                                /*
-                                We are not interested in
-                                a) characters to the left of the current matching alignment
-                                b) characters to the right of the end of the pattern
-                                c) outstanding matches inside the pattern
-                                */
-                                @if (j < i || j - i >= Pattern.Length || Matched[j - i] == MatchingStatus.Outstanding)
+                                <td id="w_@j">@Word[j]</td>
+                            }
+                            else
+                            {
+                                @if (Matched[j - i] == MatchingStatus.Matched)
                                 {
-                                    <td id="w_@j">@Word[j]</td>
+                                    <td id="w_@j" class="matchTop">@Word[j]</td>
                                 }
                                 else
                                 {
-                                    @if (Matched[j - i] == MatchingStatus.Matched)
-                                    {
-                                        <td id="w_@j" class="matchTop">@Word[j]</td>
-                                    }
-                                    else
-                                    {
 
-                                        <td id="w_@j" class="mismatchTop">@Word[j]</td>
-                                    }
+                                    <td id="w_@j" class="mismatchTop">@Word[j]</td>
                                 }
                             }
-                        </TableRow>
-                    </table>
-                    <table id="pattern" style="left:@Offset">
-                        <TableRow>
-                            @for (int j = 0; j < Pattern.Length; j++)
+                        }
+                    </TableRow>
+                </table>
+                <table id="pattern" style="left:@Offset">
+                    <TableRow>
+                        @for (int j = 0; j < Pattern.Length; j++)
+                        {
+                            @if (Matched[j] == MatchingStatus.Matched)
                             {
-                                @if (Matched[j] == MatchingStatus.Matched)
-                                {
-                                    <td id="w_@j" class="matchBottom">@Pattern[j]</td>
-                                }
-                                else if (Matched[j] == MatchingStatus.Mismatched)
-                                {
-                                    <td id="w_@j" class="mismatchBottom">@Pattern[j]</td>
-                                }
-                                else
-                                {
-                                    <td id="w_@j">@Pattern[j]</td>
-                                }
+                                <td id="w_@j" class="matchBottom">@Pattern[j]</td>
                             }
-                        </TableRow>
-                    </table>
-                </div>
+                            else if (Matched[j] == MatchingStatus.Mismatched)
+                            {
+                                <td id="w_@j" class="mismatchBottom">@Pattern[j]</td>
+                            }
+                            else
+                            {
+                                <td id="w_@j">@Pattern[j]</td>
+                            }
+                        }
+                    </TableRow>
+                </table>
+
+                @if(arrowI1 < arrowI2){
+
+                    <img style="left:@arrowStart; width: @arrowEnd;" class="in-left"  alt="Pfeil" src="next.png">
+                }
+
+
+            </div>
             }
         </div>
     </div>
@@ -112,6 +119,12 @@
     private string Offset { get => $"{i * 40}px"; }
     private int i, k;
 
+    private string arrowStart {  get => $"{arrowI1 * 40}px"; }
+    private string arrowEnd { get => $"{(arrowI2- arrowI1) * 40}px"; }
+
+    //Arrow
+    private int arrowI1, arrowI2;
+
     private bool isSimulationStarted { get; set; }
     private bool isSimulationRunning { get; set; }
     private Timer timer;
@@ -128,6 +141,7 @@
 
         i = summary.I;
         k = summary.K;
+        arrowI1 = arrowI2 = i;
         Matched[summary.K] = (summary.Matched) ? MatchingStatus.Matched : MatchingStatus.Mismatched;
 
         // Update comparison display
@@ -154,6 +168,7 @@
         }
 
         this.i = shift.I;
+        arrowI2 = this.i;
         this.k = shift.K;
 
         StateHasChanged();
