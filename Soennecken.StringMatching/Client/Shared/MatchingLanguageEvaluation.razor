@@ -4,10 +4,15 @@
 
 @inject HttpClient Http
 
-<p>
-    Die zur Evaluation der String-Matching-Algorithmen verwendeten Wörter und Sätze unterliegen dem Urheberrecht von © 2020 Abteilung Automatische Sprachverarbeitung, Universität Leipzig.
-</p>
-
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+            Die zur Evaluation der String-Matching-Algorithmen verwendeten Wörter und Sätze unterliegen dem Urheberrecht von © 2020 Abteilung Automatische Sprachverarbeitung, Universität Leipzig.
+            Nach Auswahl der gewünschten Algorithmen und Start der Evaluation, werden zufällig ausgewählte Wörter in zufällig ausgewählten Sätzen gesucht.
+            Das für den jeweiligen Algorithmus benötigte Preprocessing fließt nicht in die Evaluation ein.
+        </div>
+    </div>
+</div>
 @if (languages.Length > 0)
 {
     <div class="mat-layout-grid">
@@ -111,7 +116,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        selection = System.Enum.GetValues(typeof(Matcher)).Cast<Matcher>().Select(m => new MatchingSelection() { Matcher = m, IsSelected = false}).ToArray();
+        selection = System.Enum.GetValues(typeof(Matcher)).Cast<Matcher>().Select(m => new MatchingSelection() { Matcher = m, IsSelected = false }).ToArray();
         languages = await Http.GetFromJsonAsync<string[]>("api/languages");
         request.Language = languages.Length > 0 ? languages[0] : "";
     }

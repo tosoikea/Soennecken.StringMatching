@@ -179,7 +179,9 @@
         i = 0;
         k = 0;
         Matched = new MatchingStatus[this.Pattern.Length];
-        Matcher.Init(this.Pattern, this.Word);
+
+        Matcher.Init(this.Pattern);
+        Matcher.Start(this.Word);
 
         timer = new Timer();
         timer.Interval = 1000;

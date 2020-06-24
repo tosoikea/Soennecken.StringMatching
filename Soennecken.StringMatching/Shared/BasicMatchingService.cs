@@ -72,10 +72,11 @@ namespace Soennecken.StringMatching.Shared
 
             for(int wI = 0; wI < words.Length; wI++)
             {
+                matcher.Init(words[wI]);
                 for(int sI = 0; sI < sentences.Length; sI++)
                 {
                     int steps = 0;
-                    matcher.Init(words[wI], sentences[sI]);
+                    matcher.Start(sentences[sI]);
 
                     for(var step = matcher.Step(); !step.IsFinished; step = matcher.Step())
                     {

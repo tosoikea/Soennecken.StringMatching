@@ -7,7 +7,8 @@ namespace Soennecken.StringMatching.Shared.Algorithms
 {
     public interface IMatcher<T>
     {
-        void Init(IEquatable<T>[] pattern, IEquatable<T>[] word);
+        void Init(IEquatable<T>[] pattern);
+        void Start(IEquatable<T>[] word);
         StepSummary Step();
 
         static IEquatable<char>[] ConvertFromString(string data)

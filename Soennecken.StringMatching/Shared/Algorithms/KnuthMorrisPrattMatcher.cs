@@ -10,19 +10,22 @@ namespace Soennecken.StringMatching.Shared.Algorithms
         private int m, n, i, k;
         private int[] next;
 
-        public void Init(IEquatable<T>[] pattern, IEquatable<T>[] word)
+        public void Init(IEquatable<T>[] pattern)
         {
             _pattern = pattern;
-            _word = word;
-
             m = _pattern.Length;
+
+            // Calculate border table
+            PreProcess();
+        }
+
+        public void Start(IEquatable<T>[] word)
+        {
+            _word = word;
             n = _word.Length;
 
             i = 0;
             k = 0;
-            
-            // Calculate border table
-            PreProcess();
         }
 
         public StepSummary Step()

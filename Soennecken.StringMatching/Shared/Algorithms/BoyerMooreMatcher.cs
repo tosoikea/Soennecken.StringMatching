@@ -12,20 +12,23 @@ namespace Soennecken.StringMatching.Shared.Algorithms
 
         private int[] delta2;
 
-        public void Init(IEquatable<T>[] pattern, IEquatable<T>[] word)
+        public void Init(IEquatable<T>[] pattern)
         {
             _pattern = pattern;
-            _word = word;
-
             m = _pattern.Length;
+
+            _rule.Init(_pattern);
+            InitDelta2();
+        }
+
+        public void Start(IEquatable<T>[] word)
+        {
+            _word = word;
             n = _word.Length;
 
             i = 0;
             // Backward comparison
             k = m - 1;
-
-            _rule.Init(_pattern);
-            InitDelta2();
         }
 
         public StepSummary Step()
@@ -109,7 +112,6 @@ namespace Soennecken.StringMatching.Shared.Algorithms
                 }
             }
         }
-
         public BoyerMooreMatcher(IBadCharacterRule<T> rule)
         {
             this._rule = rule;
