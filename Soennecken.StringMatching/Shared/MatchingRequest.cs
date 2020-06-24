@@ -5,11 +5,26 @@ using System.Text;
 
 namespace Soennecken.StringMatching.Shared
 {
-   public class MatchingRequest
+    public enum Matcher
+    {
+        Naive,
+        KMP,
+        BMH,
+        BM
+    }
+
+    public class MatchingRequest
     {
         [Required]
-        public string Word { get; set; }
+        public int WordCount { get; set; }
+
         [Required]
-        public string Pattern { get; set; }
+        public int SentenceCount { get; set; }
+
+        [Required]
+        public string Language { get; set; }
+
+        [Required]
+        public Matcher[] Matcher { get; set; }
     }
 }

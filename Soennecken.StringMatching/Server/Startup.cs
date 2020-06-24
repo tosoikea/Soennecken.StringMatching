@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
+using System;
+using Soennecken.StringMatching.Shared.Services;
+using System.Net.Http;
+using Soennecken.StringMatching.Shared;
 
 namespace Soennecken.StringMatching.Server
 {
@@ -22,7 +25,9 @@ namespace Soennecken.StringMatching.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //services.AddHttpClient<ILanguageService, APILanguageService>(client => client.BaseAddress = new Uri("http://api.corpora.uni-leipzig.de/ws/"));
+            services.AddScoped<ILanguageService, DatabaseLanguageService>();
+            services.AddScoped<IMatchingService, BasicMatchingService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

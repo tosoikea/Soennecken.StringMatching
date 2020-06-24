@@ -44,7 +44,7 @@ namespace Soennecken.StringMatching.Shared.Algorithms
             }
             else
             {
-                int x = k - _rule.Offset(_word[i+k], k);
+                int x = Math.Max(k - _rule.Offset(_word[i+k], k),1);
                 int z = k - (m - 1);
 
                 // Shift

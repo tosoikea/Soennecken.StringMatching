@@ -50,7 +50,7 @@ namespace Soennecken.StringMatching.Shared.Algorithms
                 // Bad character rule
                 int bcx = k - _rule.Offset(_word[i + k], k);
                 int sgsx = delta2[k];
-                int z = k - (m-1);
+                int z = k - (m - 1);
                 int x = Math.Max(bcx, sgsx);
 
                 // Shift

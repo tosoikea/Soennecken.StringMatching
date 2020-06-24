@@ -1,6 +1,4 @@
-﻿@using System.Timers;
-@using StringMatching.Shared
-@using StringMatching.Shared.Algorithms
+﻿@using StringMatching.Shared.Algorithms
 
 <MatThemeProvider Theme="@applicationTheme">
     <MatTabGroup>
@@ -12,7 +10,7 @@
                 Wörterbuch <MatIcon Icon="@MatIconNames.Library_books"></MatIcon>
             </LabelContent>
             <ChildContent>
-                Second Content
+                <MatchingLanguageEvaluation Matcher="Matcher" />
             </ChildContent>
         </MatTab>
     </MatTabGroup>

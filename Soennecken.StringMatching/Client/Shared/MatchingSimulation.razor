@@ -6,13 +6,13 @@
     <div class="mat-layout-grid-inner">
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
             <p>Eingabewort</p>
-            <MatTextField @bind-Value="request.Word" Outlined="true" PlaceHolder="ABABABC" ReadOnly="@isSimulationRunning" OnInput="() => { if (isSimulationStarted) {
+            <MatTextField @bind-Value="WordInput" Outlined="true" PlaceHolder="ABABABC" ReadOnly="@isSimulationRunning" OnInput="() => { if (isSimulationStarted) {
                                                                                                                                             isSimulationStarted = false;
                                                                                                                                         } }" />
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
             <p>Muster</p>
-            <MatTextField @bind-Value="request.Pattern" Outlined="true" PlaceHolder="ABABC" ReadOnly="@isSimulationRunning" OnInput="() => { if (isSimulationStarted) {
+            <MatTextField @bind-Value="PatternInput" Outlined="true" PlaceHolder="ABABC" ReadOnly="@isSimulationRunning" OnInput="() => { if (isSimulationStarted) {
                                                                                                                                             isSimulationStarted = false;
                                                                                                                                         } }" />
         </div>
@@ -88,7 +88,9 @@
     [Parameter]
     public IMatcher<char> Matcher { get; set; }
 
+    private string WordInput = "ABABABC";
     private IEquatable<char>[] Word { get; set; }
+    private string PatternInput = "ABABC";
     private IEquatable<char>[] Pattern { get; set; }
 
     // Contains all matched characters between 0 and k-1
@@ -98,22 +100,6 @@
         Mismatched,
         Matched
     }
-
-    private static IEquatable<char>[] ConvertFromString(string data)
-    {
-        var result = new IEquatable<char>[data.Length];
-
-        for (int i = 0; i < data.Length; i++)
-            result[i] = data[i];
-
-        return result;
-    }
-
-    private MatchingRequest request = new MatchingRequest()
-    {
-        Word = "ABABABC",
-        Pattern = "ABABC"
-    };
 
     private MatchingStatus[] Matched { get; set; }
     private string Offset { get => $"{i * 40}px"; }
@@ -185,8 +171,8 @@
 
     private void Initialize()
     {
-        this.Word = ConvertFromString(request.Word);
-        this.Pattern = ConvertFromString(request.Pattern);
+        this.Word = IMatcher<char>.ConvertFromString(WordInput);
+        this.Pattern = IMatcher<char>.ConvertFromString(PatternInput);
 
         isSimulationStarted = true;
         isSimulationRunning = true;

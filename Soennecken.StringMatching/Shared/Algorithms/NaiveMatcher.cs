@@ -42,7 +42,7 @@ namespace Soennecken.StringMatching.Shared.Algorithms
             else
             {
                 int x = 1;
-                int z = -k;
+                int z = k;
 
                 // Shift
                 i += x;

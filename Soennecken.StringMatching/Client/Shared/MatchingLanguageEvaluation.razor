@@ -1,0 +1,118 @@
+﻿@using Soennecken.StringMatching.Shared.Algorithms
+@using Soennecken.StringMatching.Shared
+@using Newtonsoft.Json
+
+@inject HttpClient Http
+
+<p>
+    Die zur Evaluation der String-Matching-Algorithmen verwendeten Wörter und Sätze unterliegen dem Urheberrecht von © 2020 Abteilung Automatische Sprachverarbeitung, Universität Leipzig.
+</p>
+
+@if (languages.Length > 0)
+{
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatSelectItem @bind-Value="@request.Language" Items="@languages" Disabled="@isCalculating"></MatSelectItem>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatNumericUpDownField Label="Wörteranzahl"
+                                       @bind-Value=@request.WordCount
+                                       DecimalPlaces=0
+                                       Minimum=1 Maximum=2000
+                                       ReadOnly="@isCalculating">
+                </MatNumericUpDownField>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatNumericUpDownField Label="Sätzeanzahl"
+                                       @bind-Value=@request.SentenceCount
+                                       DecimalPlaces=0
+                                       Minimum=1 Maximum=1000
+                                       ReadOnly="@isCalculating">
+                </MatNumericUpDownField>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                @foreach (var sel in selection)
+                {
+                    <MatCheckbox Label="@sel.Matcher.ToString()" @bind-Value="sel.IsSelected" />
+                }
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                <MatButton Type="submit" Raised="true" Disabled="@isCalculating" OnClick="() => { Initialize(); }">Start</MatButton>
+            </div>
+        </div>
+        @if (isCalculationInitialized)
+        {
+            <div class="mat-layout-grid-inner">
+
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                    <MatTable Items="@response.Summaries" class="mat-elevation-z5">
+                        <MatTableHeader>
+                            <th>Algorithmus</th>
+                            <th>Durch. Vergleichsanzahl</th>
+                            <th>Durch. Shift-Länge</th>
+                        </MatTableHeader>
+                        <MatTableRow>
+                            <td>@context.Matcher.ToString()</td>
+                            <td>@context.AvgSteps</td>
+                            <td>@context.AvgShiftLength</td>
+                        </MatTableRow>
+                    </MatTable>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IMatcher<char> Matcher { get; set; }
+
+    private class MatchingSelection
+    {
+        public Matcher Matcher { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+    private MatchingRequest request = new MatchingRequest()
+    {
+        Language = "",
+        SentenceCount = 10,
+        WordCount = 20
+    };
+
+    private string[] languages = new string[] { };
+
+    private MatchingSelection[] selection;
+
+    private bool isCalculating = false;
+    private bool isCalculationInitialized = false;
+
+    private MatchingResponse response;
+
+
+    private async void Initialize()
+    {
+        isCalculating = true;
+        foreach (var sel in selection)
+            Console.WriteLine($"{sel.Matcher.ToString()} : {sel.IsSelected}");
+        request.Matcher = selection.Where(sel => sel.IsSelected).Select(sel => sel.Matcher).ToArray();
+        var answer = await Http.PostAsJsonAsync<MatchingRequest>($"api/matching?addTestData=False", request);
+
+        if (answer.IsSuccessStatusCode)
+        {
+            response = JsonConvert.DeserializeObject<MatchingResponse>(await answer.Content.ReadAsStringAsync());
+            isCalculationInitialized = true;
+            isCalculating = false;
+        }
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        selection = System.Enum.GetValues(typeof(Matcher)).Cast<Matcher>().Select(m => new MatchingSelection() { Matcher = m, IsSelected = false}).ToArray();
+        languages = await Http.GetFromJsonAsync<string[]>("api/languages");
+        request.Language = languages.Length > 0 ? languages[0] : "";
+    }
+}
