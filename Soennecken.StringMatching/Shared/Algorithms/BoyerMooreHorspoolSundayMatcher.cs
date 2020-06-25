@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Soennecken.StringMatching.Shared.Algorithms
 {
-    public class BoyerMooreHorspoolMatcher<T> : IMatcher<T>
+    public class BoyerMooreHorspoolSundayMatcher<T> : IMatcher <T>
     {
         private IEquatable<T>[] _pattern, _word;
         private int m, n, i, k;
@@ -48,8 +48,9 @@ namespace Soennecken.StringMatching.Shared.Algorithms
             }
             else
             {
-                // Offset always calculated from the last character in pattern
-                int x = m - 1 - Offset(_word[i + m - 1]);
+                // Offset always calculated from the last character in pattern - BMH
+                // Character to the right of the pattern must be included in matching, if given - BMHS
+                int x = m - ((i + m < n) ? Offset(_word[i + m]) : 0);
                 int z = k - (m - 1);
 
                 // Shift

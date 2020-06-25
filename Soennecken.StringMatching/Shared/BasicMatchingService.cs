@@ -52,7 +52,10 @@ namespace Soennecken.StringMatching.Shared
                     matcher = new KnuthMorrisPrattMatcher<char>();
                     break;
                 case Matcher.BMH:
-                    matcher = new BoyerMooreHorspoolMatcher<char>(new BadCharacterRule<char>());
+                    matcher = new BoyerMooreHorspoolMatcher<char>();
+                    break;
+                case Matcher.BMHS:
+                    matcher = new BoyerMooreHorspoolSundayMatcher<char>();
                     break;
                 case Matcher.BM:
                     matcher = new BoyerMooreMatcher<char>(new BadCharacterRule<char>());

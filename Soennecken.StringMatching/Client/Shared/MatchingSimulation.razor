@@ -17,68 +17,80 @@
                                                                                                                                         } }" />
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
-            <MatButton Type="submit" Raised="true" Disabled="@isSimulationRunning" OnClick="() => { Initialize(); }">Start</MatButton>
+            @if (!isSimulationRunning)
+            {
+                <MatButton Type="submit" Raised="true" OnClick="() => { Initialize(); }">Start</MatButton>
+            }
+            else if (!isPaused)
+            {
+                <MatButton Type="submit" Raised="true" Icon="pause" OnClick="() => { lock (_timerLock) { isPaused = true; timer.Stop(); } }">Pause</MatButton>
+            }
+            else
+            {
+                <MatButton Type="submit" Raised="true" Icon="play_arrow" OnClick="() => { lock (_timerLock) { isPaused = false; timer.Start(); }  }">Continue</MatButton>
+            }
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
             @if (@isSimulationStarted)
             {
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
-                <table>
-                    <TableRow>
-                        @for (int j = 0; j < Word.Length; j++)
-                        {
-                            /*
-                            We are not interested in
-                            a) characters to the left of the current matching alignment
-                            b) characters to the right of the end of the pattern
-                            c) outstanding matches inside the pattern
-                            */
-                            @if (j < i || j - i >= Pattern.Length || Matched[j - i] == MatchingStatus.Outstanding)
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
+                    <table>
+                        <TableRow>
+                            @for (int j = 0; j < Word.Length; j++)
                             {
-                                <td id="w_@j">@Word[j]</td>
-                            }
-                            else
-                            {
-                                @if (Matched[j - i] == MatchingStatus.Matched)
+                                /*
+                                We are not interested in
+                                a) characters to the left of the current matching alignment
+                                b) characters to the right of the end of the pattern
+                                c) outstanding matches inside the pattern
+                                */
+                                @if (j < i || j - i >= Pattern.Length || Matched[j - i] == MatchingStatus.Outstanding)
                                 {
-                                    <td id="w_@j" class="matchTop">@Word[j]</td>
+                                    <td id="w_@j">@Word[j]</td>
                                 }
                                 else
                                 {
+                                    @if (Matched[j - i] == MatchingStatus.Matched)
+                                    {
+                                        <td id="w_@j" class="matchTop">@Word[j]</td>
+                                    }
+                                    else
+                                    {
 
-                                    <td id="w_@j" class="mismatchTop">@Word[j]</td>
+                                        <td id="w_@j" class="mismatchTop">@Word[j]</td>
+                                    }
                                 }
                             }
-                        }
-                    </TableRow>
-                </table>
-                <table id="pattern" style="left:@Offset">
-                    <TableRow>
-                        @for (int j = 0; j < Pattern.Length; j++)
-                        {
-                            @if (Matched[j] == MatchingStatus.Matched)
+                        </TableRow>
+                    </table>
+                    <table id="pattern" style="left:@Offset">
+                        <TableRow>
+                            @for (int j = 0; j < Pattern.Length; j++)
                             {
-                                <td id="w_@j" class="matchBottom">@Pattern[j]</td>
+                                @if (Matched[j] == MatchingStatus.Matched)
+                                {
+                                    <td id="w_@j" class="matchBottom">@Pattern[j]</td>
+                                }
+                                else if (Matched[j] == MatchingStatus.Mismatched)
+                                {
+                                    <td id="w_@j" class="mismatchBottom">@Pattern[j]</td>
+                                }
+                                else
+                                {
+                                    <td id="w_@j">@Pattern[j]</td>
+                                }
                             }
-                            else if (Matched[j] == MatchingStatus.Mismatched)
-                            {
-                                <td id="w_@j" class="mismatchBottom">@Pattern[j]</td>
-                            }
-                            else
-                            {
-                                <td id="w_@j">@Pattern[j]</td>
-                            }
-                        }
-                    </TableRow>
-                </table>
+                        </TableRow>
+                    </table>
 
-                @if(arrowI1 < arrowI2){
+                    @if (arrowI1 < arrowI2)
+                    {
 
-                    <img style="left:@arrowStart; width: @arrowEnd;" class="in-left"  alt="Pfeil" src="next.png">
-                }
+                        <img style="left:@arrowStart; width: @arrowEnd;" class="in-left" alt="Pfeil" src="next.png">
+                    }
 
 
-            </div>
+                </div>
             }
         </div>
     </div>
@@ -105,18 +117,24 @@
     private string Offset { get => $"{i * 40}px"; }
     private int i, k;
 
-    private string arrowStart {  get => $"{arrowI1 * 40}px"; }
-    private string arrowEnd { get => $"{(arrowI2- arrowI1) * 40}px"; }
+    private string arrowStart { get => $"{arrowI1 * 40}px"; }
+    private string arrowEnd { get => $"{(arrowI2 - arrowI1) * 40}px"; }
 
     //Arrow
     private int arrowI1, arrowI2;
 
-    private bool isSimulationStarted { get; set; }
-    private bool isSimulationRunning { get; set; }
+    private bool isSimulationStarted;
+    private bool isSimulationRunning;
+    private bool isShifting;
+    private bool isPaused;
+
+    private static object _timerLock = new object();
+    private Shift currentShift;
     private Timer timer;
 
-    private void RunStep(Object source, System.Timers.ElapsedEventArgs e)
+    private void RunStep(Object source, ElapsedEventArgs e)
     {
+        timer.Elapsed -= RunStep;
         StepSummary summary = Matcher.Step();
 
         if (summary.IsFinished)
@@ -127,39 +145,53 @@
 
         i = summary.I;
         k = summary.K;
+        currentShift = summary.Shift;
         arrowI1 = arrowI2 = i;
         Matched[summary.K] = (summary.Matched) ? MatchingStatus.Matched : MatchingStatus.Mismatched;
 
         // Update comparison display
         StateHasChanged();
 
-        if (summary.Shift != null)
-            ApplyShift(summary.Shift);
+        lock (_timerLock)
+        {
+            if (currentShift != null)
+                timer.Elapsed += ApplyShift;
+            else
+                timer.Elapsed += RunStep;
+
+            if (!isPaused)
+                timer.Start();
+        }
     }
 
-    private async void ApplyShift(Shift shift)
+    private void ApplyShift(Object source, ElapsedEventArgs e)
     {
-        timer.Stop();
-        await Task.Delay(TimeSpan.FromSeconds(1));
-
-        if (shift.IsLeft)
+        if (currentShift.IsLeft)
         {
-            int limit = (shift.K == Pattern.Length - 1) ? Pattern.Length : shift.K;
+            int limit = (currentShift.K == Pattern.Length - 1) ? Pattern.Length : currentShift.K;
             for (int j = 0; j < limit; j++)
                 Matched[j] = MatchingStatus.Outstanding;
         }
         else
         {
-            for (int j = shift.K; j < Pattern.Length; j++)
+            for (int j = currentShift.K; j < Pattern.Length; j++)
                 Matched[j] = MatchingStatus.Outstanding;
         }
 
-        this.i = shift.I;
+        this.i = currentShift.I;
         arrowI2 = this.i;
-        this.k = shift.K;
+        this.k = currentShift.K;
 
         StateHasChanged();
-        timer.Start();
+
+        lock (_timerLock)
+        {
+            timer.Elapsed -= ApplyShift;
+            timer.Elapsed += RunStep;
+
+            if (!isPaused)
+                timer.Start();
+        }
     }
 
     private void Finish()
@@ -187,7 +219,7 @@
         timer.Interval = 1000;
 
         timer.Elapsed += RunStep;
-        timer.AutoReset = true;
+        timer.AutoReset = false;
 
         timer.Start();
     }

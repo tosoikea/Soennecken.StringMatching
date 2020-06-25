@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -9,8 +11,9 @@ namespace Soennecken.StringMatching.Shared
     {
         Naive,
         KMP,
+        BM,
         BMH,
-        BM
+        BMHS
     }
 
     public class MatchingRequest
