@@ -78,37 +78,38 @@ namespace Soennecken.StringMatching.Shared.Algorithms
 
         private void InitDelta2()
         {
-            delta2 = new int[_pattern.Length];
+            int j = 0;
+            delta2 = new int[m];
 
             // Initialize with best case scenario
-            for (int j = 0; j < _pattern.Length; j++)
-                delta2[j] = _pattern.Length;
+            for (;j < m; j++)
+                delta2[j] = m;
 
             // 1. Rightmost occurence
-            int[] next = new int[_pattern.Length + 1];
+            int[] next = new int[m + 1];
             next[0] = -1;
             int t = next[0];
 
-            for (int j = 1; j <= _pattern.Length; j++)
+            for (int h = 1; h <= m; h++)
             {
-                while (t >= 0 && !_pattern[_pattern.Length - t - 1].Equals(_pattern[_pattern.Length - j]))
+                while (t >= 0 && !_pattern[m - t - 1].Equals(_pattern[m - h]))
                 {
                     //As soon as edge is interrupted and can no longer be extended, we store it inside delta2 (strong good suffix)
-                    delta2[_pattern.Length - t - 1] = Math.Min(delta2[_pattern.Length - t - 1], j - t - 1);
+                    delta2[m - t - 1] = Math.Min(delta2[m - t - 1], h - t - 1);
                     t = next[t];
                 }
                 t++;
-                next[j] = t;
+                next[h] = t;
             }
 
-            int z = 0;
-            for (t = next[_pattern.Length]; t >= 0; t = next[t])
+            j = 0;
+            for (int rl = next[m]; rl >= 0; rl = next[rl])
             {
-                int shift = _pattern.Length - t;
-                while (z < shift)
+                int shift = m - rl;
+                while (j < shift)
                 {
-                    delta2[z] = Math.Min(delta2[z], shift);
-                    z++;
+                    delta2[j] = Math.Min(delta2[j], shift);
+                    j++;
                 }
             }
         }
