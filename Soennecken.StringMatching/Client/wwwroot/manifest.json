@@ -1,6 +1,6 @@
 {
-  "name": "Soennecken.StringMatching",
-  "short_name": "Soennecken.StringMatching",
+  "name": "String-Matching-Algorithmen",
+  "short_name": "String-Matching-Algorithmen",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
