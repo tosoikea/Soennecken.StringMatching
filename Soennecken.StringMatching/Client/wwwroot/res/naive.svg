@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+
+<!-- Page 1 -->
+<svg x="0" y="0" width="379" height="150" viewBox="0 0 379 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+style="display: block;margin-left: auto;margin-right: auto;">
+<defs>
+<clipPath id="c_1"><path d="M0,0H379V150H0Z"/></clipPath>
+<style type="text/css"><![CDATA[
+text { white-space: pre; }
+path, image { pointer-events: none; }
+text::-moz-selection {
+	color: transparent;
+	background: rgba(0, 106, 173, 0.4);
+}
+text::selection {
+	color: transparent;
+	background: rgba(0, 106, 173, 0.4);
+}
+
+.s1{
+font-size: 15.22px;
+font-family: CMMI10_e;
+fill: TRANSPARENT;
+}
+.s2{
+font-size: 10.65px;
+font-family: CMR7_i;
+fill: TRANSPARENT;
+}
+.s3{
+font-size: 15.22px;
+font-family: CMR10_g;
+fill: TRANSPARENT;
+}
+
+.g0{
+fill: #00FF00;
+stroke: #00FF00;
+stroke-width: 0.608;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g1{
+fill: #FF0000;
+stroke: #FF0000;
+stroke-width: 0.608;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g2{
+fill: none;
+stroke: #000000;
+stroke-width: 1.217;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g3{
+fill: none;
+stroke: #FF0000;
+stroke-width: 1.217;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g4{
+fill: none;
+stroke: #FF0000;
+stroke-width: 0.974;
+stroke-linecap: round;
+stroke-linejoin: round;
+}
+.g5{
+fill: none;
+stroke: #FF0000;
+stroke-width: 0.608;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g6{
+fill: none;
+stroke: #FF0000;
+stroke-width: 0.487;
+stroke-linecap: round;
+stroke-linejoin: round;
+}
+
+]]></style>
+
+<path d="M383,-16C269,-16,167,37,167,176c0,58,18,128,85,308c11,26,28,69,28,107c0,49,-25,51,-39,51C188,642,128,594,87,452C79,428,78,425,63,425c-3,0,-19,0,-19,15c0,14,57,235,202,235c75,0,125,-56,125,-125c0,-31,-9,-52,-26,-98C273,264,266,205,266,156C266,130,266,17,388,17c60,0,105,47,141,128c-2,8,-2,11,-2,28c0,27,3,55,14,100c11,40,82,332,87,343c11,30,38,42,56,42c23,0,45,-13,45,-41c0,-9,-16,-65,-23,-99L642,261C636,240,625,193,625,150C625,63,666,17,738,17c75,0,128,53,168,134c40,78,84,228,84,280c0,73,-38,113,-55,130c-14,12,-23,21,-23,41c0,34,38,73,76,73c26,0,68,-23,68,-107c0,-73,-49,-278,-101,-397C915,79,848,-16,733,-16C688,-16,582,-7,542,90C481,-16,409,-16,383,-16Z"
+id="f0_3"
+transform="scale(0.001,-0.001)"/>
+
+<path d="M379,17c56,0,130,50,182,157c27,58,78,234,78,324c0,90,-37,144,-98,144c-26,0,-70,-11,-124,-58C390,561,348,518,338,477L263,177c-5,-18,-5,-21,-5,-24C258,144,278,17,379,17ZM-28,-295c-12,0,-20,6,-20,18c0,29,17,29,35,29c66,0,70,11,82,63L240,493c6,26,11,43,11,78c0,58,-22,71,-48,71C148,642,118,568,92,460C83,426,81,425,66,425c-3,0,-19,0,-19,15c0,5,20,96,48,148c13,28,43,87,113,87c56,0,122,-32,137,-114c51,59,124,114,200,114C662,675,749,574,749,431C749,206,558,-16,380,-16C303,-16,260,37,240,81C229,43,165,-205,165,-224c0,-13,0,-24,76,-24c22,0,37,0,37,-17c0,-30,-20,-30,-76,-30c-52,4,-103,4,-145,4c-45,-4,42,-4,-85,-4Z"
+id="f0_2"
+transform="scale(0.001,-0.001)"/>
+
+<path d="M434,12c61,0,165,34,195,173c20,96,20,209,20,322c0,133,-1,243,-26,326C596,921,516,972,434,972C371,972,273,940,241,819C218,735,218,619,218,507c0,-113,0,-238,22,-328C270,53,364,12,434,12Zm0,-42C79,-30,79,377,79,487c0,110,0,527,355,527c122,0,217,-61,264,-131C768,776,788,655,788,487C788,377,788,-30,434,-30Z"
+id="f1_1"
+transform="scale(0.001,-0.001)"/>
+
+<path d="M177,0V55h58c153,0,153,20,153,70V904C304,862,203,862,167,862v55c62,0,201,1,299,97c43,0,46,-1,46,-42V125c0,-50,0,-70,153,-70h58L689,2C497,6,449,6,393,6C205,2,449,0,177,0Z"
+id="f1_2"
+transform="scale(0.001,-0.001)"/>
+
+<path d="M212,0C168,0,131,37,131,81c0,44,37,81,81,81c45,0,81,-37,81,-81C293,37,257,0,212,0Z"
+id="f0_1"
+transform="scale(0.001,-0.001)"/>
+
+<path d="M43,0V47c102,0,119,0,119,69V911c0,74,-12,85,-119,85v47l220,17V327L478,513c12,11,34,29,34,60c0,20,-15,37,-44,38l21,46c95,-3,150,-3,192,-3c20,0,-42,4,65,4V611c-33,-1,-97,-4,-193,-82C538,516,429,425,429,419c0,-5,8,-14,9,-17L633,128C691,47,724,47,781,47L736,3C692,5,648,5,616,5C526,2,648,0,483,0V47c29,0,55,6,55,36c0,27,-64,113,-182,275L258,273V116C258,47,275,47,377,47L316,3C255,5,209,5,165,5C93,2,209,0,43,0Z"
+id="f2_1"
+transform="scale(0.001,-0.001)"/>
+
+
+</defs>
+<path d="M0,0
+L0,150
+L379,150
+L379,0 Z " 
+fill="#FFFFFF" stroke="none"/>
+<g clip-path="url(#c_1)">
+<path d="M32.4,42V20.3H119V42Z" class="g0"/>
+<path d="M119,42V20.3h21.6V42Z" class="g1"/>
+<path d="M32.4,42V20.3H378.8V42Z" class="g2"/>
+<path d="M32.4,106.9V85.3H119v21.6Z" class="g0"/>
+<path d="M119,106.9V85.3h21.6v21.6Z" class="g1"/>
+<path d="M32.4,106.9V85.3H248.9v21.6ZM54,150.2V128.6H270.6v21.6Z" class="g2"/>
+<g fill="#000000" >
+<use xlink:href="#f0_3" transform="matrix(10,0,0,10,5.1,34.4)"/>
+<use xlink:href="#f0_2" transform="matrix(10,0,0,10,6.9,97.9)"/>
+</g>
+<text x="5" y="34" class="s1">w</text>
+<g fill="#000000" >
+<use xlink:href="#f0_2" transform="matrix(10,0,0,10,6.9,141.2)"/>
+</g>
+<text x="6" y="97" class="s1">p</text>
+<g fill="#000000" >
+<use xlink:href="#f0_3" transform="matrix(10,0,0,10,34.3,11.6)"/>
+</g>
+<text x="6" y="141" class="s1">p</text>
+<g fill="#000000" >
+<use xlink:href="#f1_1" transform="matrix(7,0,0,7,45.2,13.9)"/>
+</g>
+<text x="34" y="11" class="s1">w</text>
+<g fill="#000000" >
+<use xlink:href="#f0_3" transform="matrix(10,0,0,10,56,11.6)"/>
+</g>
+<text x="45" y="13" class="s2">0</text>
+<g fill="#000000" >
+<use xlink:href="#f1_2" transform="matrix(7,0,0,7,66.9,13.9)"/>
+</g>
+<text x="55" y="11" class="s1">w</text>
+<g fill="#000000" >
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,77.6,10.3)"/>
+</g>
+<text x="66" y="13" class="s2">1</text>
+<g fill="#000000" >
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,84.4,10.3)"/>
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,91.2,10.3)"/>
+<use xlink:href="#f0_2" transform="matrix(10,0,0,10,36,76.2)"/>
+</g>
+<text x="77" y="10" dx="0,2.5,2.5" class="s1">...</text>
+<g fill="#000000" >
+<use xlink:href="#f1_1" transform="matrix(7,0,0,7,43.6,78.5)"/>
+</g>
+<text x="35" y="76" class="s1">p</text>
+<g fill="#000000" >
+<use xlink:href="#f0_2" transform="matrix(10,0,0,10,57.6,76.2)"/>
+</g>
+<text x="43" y="78" class="s2">0</text>
+<g fill="#000000" >
+<use xlink:href="#f1_2" transform="matrix(7,0,0,7,65.3,78.5)"/>
+</g>
+<text x="57" y="76" class="s1">p</text>
+<g fill="#000000" >
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,77.6,75.3)"/>
+</g>
+<text x="65" y="78" class="s2">1</text>
+<g fill="#000000" >
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,84.4,75.3)"/>
+<use xlink:href="#f0_1" transform="matrix(10,0,0,10,91.2,75.3)"/>
+</g>
+<text x="77" y="75" dx="0,2.5,2.5" class="s1">...</text>
+<path d="M32.4,139.4H53" class="g3"/>
+<path d="M50.6,136.2c.2,1.2,2.4,3,2.9,3.2c-.5,.2,-2.7,2,-2.9,3.2" class="g4"/>
+<g fill="#FF0000" >
+<use xlink:href="#f2_1" transform="matrix(10,0,0,10,125.8,68.9)"/>
+</g>
+<text x="125" y="68" class="s3">k</text>
+<path d="M32.4,139.4H53" class="g3"/>
+<path d="M50.6,136.2c.2,1.2,2.4,3,2.9,3.2c-.5,.2,-2.7,2,-2.9,3.2" class="g4"/>
+<path d="M129.8,74.3V84.6" class="g5"/>
+<path d="M132.3,82.8c-1,.1,-2.3,1.8,-2.5,2.2c-.1,-.4,-1.5,-2.1,-2.4,-2.2" class="g6"/>
+
+</g>
+
+<!-- Any embedded fonts defined here -->
+<style type="text/css" ><![CDATA[
+
+@font-face {
+	font-family: CMMI10_e;
+	src: url("fonts/CMMI10_e.woff") format("woff");
+}
+
+@font-face {
+	font-family: CMR10_g;
+	src: url("fonts/CMR10_g.woff") format("woff");
+}
+
+@font-face {
+	font-family: CMR7_i;
+	src: url("fonts/CMR7_i.woff") format("woff");
+}
+
+]]></style>
+
+</svg>

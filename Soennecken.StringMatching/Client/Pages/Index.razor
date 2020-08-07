@@ -1,3 +1,22 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<MatCard Style="margin:10px">
+    <MatCardContent>
+        <div class="row">
+            <div class="col">
+                <object align="middle" style="width:100%;height:100%" data="res/strategy.svg" type="image/svg+xml"></object>
+            </div>
+            <div class="col">
+                <h2>String-Matching</h2>
+                Wir sind nach der Suche von genauen Vorkommnissen eines Musters <var>p</var> in einem Eingabewort <var>w</var> interessiert.
+                Alle Verfahren auf dieser Website vergleichen die beiden Wörter zeichenweise.
+                Sollte es zu einer Ungleichheit zwischen dem Eingabewort und dem Muster kommen, also <var>p<sub>k</sub></var> ungleich <var>w<sub>i+k</sub></var> sein, so wird das Muster verschoben und die Suche fährt fort.
+                Insbesondere ist die aktuell abzugleichende Stelle <var>k</var> nach einem <b>Shift</b> so anzupassen, dass keine möglichen Vorkommnisse übersprungen werden.
+            </div>
+        </div>
+    </MatCardContent>
+</MatCard>
+
+Auf dieser Website sollen interessante, bzw. wichtige Algorithmen der Informatik vorgestellt und visualisiert werden.
+Sie ist WIP und beinhaltet zum aktuellen Zeitpunkt nur grundlegende Visualisierungen und Analysen von Algorithmen zur exakten Suche von Mustern.
+Der aktuelle Source Code ist unter <a href="https://github.com/tosoikea/Soennecken.StringMatching">GitHub</a> einsehbar.

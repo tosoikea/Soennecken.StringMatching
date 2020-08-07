@@ -3,7 +3,49 @@
 @using Soennecken.StringMatching.Shared.Algorithms
 
 <h1>Boyer Moore</h1>
-Lorem ipsum
+
+<MatCard Style="margin:10px">
+    <MatCardContent>
+        <div class="row">
+            <div class="col">
+                <object align="middle" style="width:100%;height:100%" data="res/bm_badchar.svg" type="image/svg+xml"></object>
+            </div>
+            <div class="col">
+                <h3>Bad Character Rule</h3>
+                Für das Zeichen <var>w<sub>i+k</sub></var>, welches nicht mit der aktuellen Stelle <var>k</var> im Muster übereinstimmt, ermitteln wir das rechteste Vorkommnis im Muster.
+                Wir verschieben das Muster im Anschluss so, dass das rechteste Vorkommnis und das Zeichen <var>w<sub>i+k</sub></var> untereinander stehen.
+            </div>
+        </div>
+    </MatCardContent>
+</MatCard>
+
+<MatCard Style="margin:10px">
+    <MatCardContent>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <object align="middle" style="width:100%;height:100%" data="res/bm_stronggoodsuffix.svg" type="image/svg+xml"></object>
+                    </div>
+                    <div class="col">
+                        <object align="middle" style="width:100%;height:100%" data="res/bm_stronggoodsuffix_rmpo.svg" type="image/svg+xml"></object>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Strong Good Suffix Rule</h3>
+                Sei <var>p<sup>'</sup></var> unser aktuell erfolgreich verglichenes Teilwort.
+                Wir sind nur an solchen Teilwörtern in unserem Muster interessiert, welche nicht das gleiche Zeichen vor dem Beginn stehen haben, wie <var>p<sup>'</sup></var>.
+                Denn wir wissen bereits, dass dieses Zeichen nicht mit dem Eingabewort übereinstimmt.
+                Es gibt zwei Varianten, die in dieser Regel relevant sind
+                <ul>
+                    <li>das rechteste Teilwort <var>t<sub>p<sup>'</sup></sub></var>, welches vollständig im Muster enthalten ist, und entweder bei <var>0</var> beginnt oder ein anderes Zeichen vor sich stehen hat</li>
+                    <li>das größte Präfix <var>u<sub>p<sup>'</sup></sub></var> des Musters, welches mit einem Suffix von <var>p<sup>'</sup></var> übereinstimmt</li>
+                </ul>
+            </div>
+        </div>
+    </MatCardContent>
+</MatCard>
 
 <MatchingInput Matcher="new BoyerMooreMatcher<char>(new BadCharacterRule<char>())" />
 
